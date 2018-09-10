@@ -6,7 +6,7 @@
     function init(url) {
         var socket = new WebSocket(url);
         socket.onopen = function (e) {
-            console.log("Connected to CK.WebPush");
+            console.log("Connected to CK.WebPush on " + url);
         };
         socket.onclose = function (e) {
             console.log("Disconnected from CK.WebPush");

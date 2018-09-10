@@ -154,7 +154,26 @@ namespace CK.WebPush
             Startup.root = args[0];
             Startup.port = int.Parse(args[1]);
 
-            Console.WriteLine($"Add To Your Page : <script src=\"http://localhost:{Startup.port}/js.js\"></script>");
+            Console.WriteLine($@"
+Add To Your Page :
+<script src=""http://localhost:{Startup.port}/js.js async""></script>
+
+Add To Your Qlik Extension:
+(function addwebpush() {{
+    if (window.location.hostname.startsWith(""localhost""))
+    {{
+        const id = ""#ck-webpush-script"";
+        if (!document.querySelector(id))
+        {{
+            const tag = document.createElement(""script"");
+            tag.id = id;
+            tag.src = ""http://localhost:{Startup.port}/js.js"";
+            tag.async = true;
+            document.head.appendChild(tag);
+        }}
+    }}
+}}());
+");
 
             new WebHostBuilder()
             .UseKestrel()
